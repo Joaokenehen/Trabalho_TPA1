@@ -7,7 +7,7 @@ interface FormaProdutoProps {
   onSave: (product: Product) => void;
 }
 
-export function ProductForm({ products, onSave }: FormaProdutoProps) {
+export function FormaProduto({ products, onSave }: FormaProdutoProps) {
   const navigate = useNavigate();
   const { id } = useParams();
 
