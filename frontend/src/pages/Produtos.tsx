@@ -1,10 +1,16 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { type Product } from '../types/index';
 
-export function Produtos() {
-  const products: any[] = []; 
+interface ProductsProps {
+  products: Product[];
+  onDelete: (id: string) => void;
+}
+
+export function Produtos({ products, onDelete }: ProductsProps) {
+  const navigate = useNavigate();
 
   return (
-    <div className="container mx-auto max-w-5xl bg-white p-6 rounded-lg shadow">
+    <div className="container mx-auto max-w-5xl bg-white p-6 rounded-lg shadow mt-8">
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold text-gray-800">Listagem de Produtos 🧾</h1>
         
@@ -38,17 +44,19 @@ export function Produtos() {
             ) : (
               products.map((product) => (
                 <tr key={product.id} data-testid="product-row" className="hover:bg-gray-50 transition-colors">
-                  <td className="border border-gray-200 p-3">{product.name}</td>
-                  <td className="border border-gray-200 p-3">R$ {product.price}</td>
-                  <td className="border border-gray-200 p-3">{product.category}</td>
+                  <td className="border border-gray-200 p-3">{product.nome}</td>
+                  <td className="border border-gray-200 p-3">R$ {product.preco}</td>
+                  <td className="border border-gray-200 p-3">{product.categoria}</td>
                   <td className="border border-gray-200 p-3 flex justify-center gap-2">
                     <button 
+                      onClick={() => navigate(`/editar-produto/${product.id}`)}
                       data-testid="edit-product-button" 
                       className="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded text-sm transition-colors"
                     >
                       Editar
                     </button>
                     <button 
+                      onClick={() => onDelete(product.id)}
                       data-testid="delete-product-button"
                       className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm transition-colors"
                     >
