@@ -3,7 +3,6 @@ import { type ContextoProduto } from '../components/Layout';
 
 export function Produtos() {
   const navigate = useNavigate();
-  // Puxando os dados através do Outlet!
   const { produtos, handleDeletarProduto } = useOutletContext<ContextoProduto>();
 
   return (
@@ -54,7 +53,7 @@ export function Produtos() {
                     </button>
                     <button 
                       onClick={() => handleDeletarProduto(produto.id)}
-                      data-testid="deletar-produto-button"
+                      data-testid="excluir-produto-button"
                       className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm transition-colors"
                     >
                       Excluir
