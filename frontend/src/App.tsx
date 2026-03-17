@@ -4,26 +4,21 @@ import { Menu } from './components/Menu';
 import { Produtos } from './pages/Produtos';
 import { Sobre } from './pages/Sobre';
 import { FormaProduto } from './pages/FormaProduto';
-import type { Product } from './types/index';
+import type { Produto } from './types/index';
 
 function App() {
-  // Estado central que guarda a lista de produtos (mudei para 'produtos')
-  const [produtos, setProdutos] = useState<Product[]>([]);
+  const [produtos, setProdutos] = useState<Produto[]>([]);
 
-  // Função para salvar (criar ou editar)
-  const handleSaveProduct = (produto: Product) => {
+  const handleSaveProduct = (produto: Produto) => {
     setProdutos((prev) => {
       const exists = prev.find((p) => p.id === produto.id);
       if (exists) {
-        // Se já existe, atualiza
         return prev.map((p) => (p.id === produto.id ? produto : p));
       }
-      // Se não existe, adiciona na lista
       return [...prev, produto];
     });
   };
 
-  // Função para excluir
   const handleDeleteProduct = (id: string) => {
     setProdutos((prev) => prev.filter((p) => p.id !== id));
   };
@@ -36,7 +31,7 @@ function App() {
           {/* Trocado <Products /> por <Produtos /> */}
           <Route 
             path="/" 
-            element={<Produtos products={produtos} onDelete={handleDeleteProduct} />} 
+            element={<Produtos produto={produtos} onDelete={handleDeleteProduct} />} 
           />
           
           {/* Trocado <About /> por <Sobre /> */}
@@ -45,11 +40,11 @@ function App() {
           {/* Trocado <ProductForm /> por <FormaProduto /> */}
           <Route 
             path="/novo-produto" 
-            element={<FormaProduto products={produtos} onSave={handleSaveProduct} />} 
+            element={<FormaProduto produto={produtos} onSave={handleSaveProduct} />} 
           />
           <Route 
             path="/editar-produto/:id" 
-            element={<FormaProduto products={produtos} onSave={handleSaveProduct} />} 
+            element={<FormaProduto produto={produtos} onSave={handleSaveProduct} />} 
           />
         </Routes>
       </div>

@@ -1,43 +1,32 @@
-import { useState, useEffect, type FormEvent } from 'react';
+import { useState, type FormEvent } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { type Product } from '../types/index';
+import { type Produto } from '../types/index';
 
 interface FormaProdutoProps {
-  products: Product[];
-  onSave: (product: Product) => void;
+  produto: Produto[]; // Recebe a lista de produtos
+  onSave: (produtoSalvo: Produto) => void;
 }
 
-export function FormaProduto({ products, onSave }: FormaProdutoProps) {
+export function FormaProduto({ produto, onSave }: FormaProdutoProps) {
   const navigate = useNavigate();
   const { id } = useParams();
-
-  // Mudando os estados para português
-  const [nome, setNome] = useState('');
-  const [preco, setPreco] = useState('');
-  const [categoria, setCategoria] = useState('');
-
-  useEffect(() => {
-    if (id) {
-      const productToEdit = products.find((p) => p.id === id);
-      if (productToEdit) {
-        setNome(productToEdit.nome);
-        setPreco(productToEdit.preco.toString());
-        setCategoria(productToEdit.categoria);
-      }
-    }
-  }, [id, products]);
+  const produtoEditado = id ? produto.find((p) => p.id === id) : null;
+  const [nome, setNome] = useState(produtoEditado ? produtoEditado.nome : '');
+  const [preco, setPreco] = useState(produtoEditado ? produtoEditado.preco.toString() : '');
+  const [categoria, setCategoria] = useState(produtoEditado ? produtoEditado.categoria : '');
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     
-    const productData: Product = {
+    // Objeto totalmente em português
+    const dadosProduto: Produto = {
       id: id ? id : Date.now().toString(),
       nome,
       preco,
       categoria,
     };
 
-    onSave(productData);
+    onSave(dadosProduto);
     navigate('/');
   };
 
@@ -57,7 +46,7 @@ export function FormaProduto({ products, onSave }: FormaProdutoProps) {
           <input
             type="text"
             required
-            data-testid="product-name-input"
+            data-testid="produto-nome-input"
             value={nome}
             onChange={(e) => setNome(e.target.value)}
             className="w-full border border-gray-300 p-2 rounded focus:outline-none focus:border-blue-500"
@@ -71,7 +60,7 @@ export function FormaProduto({ products, onSave }: FormaProdutoProps) {
             type="number"
             step="0.01"
             required
-            data-testid="product-price-input"
+            data-testid="produto-preco-input"
             value={preco}
             onChange={(e) => setPreco(e.target.value)}
             className="w-full border border-gray-300 p-2 rounded focus:outline-none focus:border-blue-500"
@@ -84,7 +73,7 @@ export function FormaProduto({ products, onSave }: FormaProdutoProps) {
           <input
             type="text"
             required
-            data-testid="product-category-input"
+            data-testid="produto-categoria-input"
             value={categoria}
             onChange={(e) => setCategoria(e.target.value)}
             className="w-full border border-gray-300 p-2 rounded focus:outline-none focus:border-blue-500"
@@ -95,7 +84,7 @@ export function FormaProduto({ products, onSave }: FormaProdutoProps) {
         <div className="flex gap-4 mt-4">
           <button
             type="submit"
-            data-testid="save-product-button"
+            data-testid="salvar-produto-button"
             className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded font-medium transition-colors"
           >
             Salvar
@@ -103,7 +92,7 @@ export function FormaProduto({ products, onSave }: FormaProdutoProps) {
           <button
             type="button"
             onClick={handleCancel}
-            data-testid="cancel-product-button"
+            data-testid="cancelar-produto-button"
             className="bg-gray-400 hover:bg-gray-500 text-white px-4 py-2 rounded font-medium transition-colors"
           >
             Cancelar

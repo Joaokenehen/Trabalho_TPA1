@@ -1,12 +1,12 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { type Product } from '../types/index';
+import { type Produto } from '../types/index';
 
-interface ProductsProps {
-  products: Product[];
+interface ProdutoProps {
+  produto: Produto[];
   onDelete: (id: string) => void;
 }
 
-export function Produtos({ products, onDelete }: ProductsProps) {
+export function Produtos({ produto, onDelete }: ProdutoProps) {
   const navigate = useNavigate();
 
   return (
@@ -16,7 +16,7 @@ export function Produtos({ products, onDelete }: ProductsProps) {
         
         <Link to="/novo-produto">
           <button 
-            data-testid="create-product-button"
+            data-testid="criar-produto-button"
             className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded font-medium transition-colors"
           >
             Criar Produto
@@ -35,28 +35,28 @@ export function Produtos({ products, onDelete }: ProductsProps) {
             </tr>
           </thead>
           <tbody>
-            {products.length === 0 ? (
+            {produto.length === 0 ? (
               <tr>
                 <td colSpan={4} className="border border-gray-200 p-6 text-center text-gray-500">
                   Nenhum produto cadastrado.
                 </td>
               </tr>
             ) : (
-              products.map((product) => (
-                <tr key={product.id} data-testid="product-row" className="hover:bg-gray-50 transition-colors">
-                  <td className="border border-gray-200 p-3">{product.nome}</td>
-                  <td className="border border-gray-200 p-3">R$ {product.preco}</td>
-                  <td className="border border-gray-200 p-3">{product.categoria}</td>
+              produto.map((produto) => (
+                <tr key={produto.id} data-testid="produto-row" className="hover:bg-gray-50 transition-colors">
+                  <td className="border border-gray-200 p-3">{produto.nome}</td>
+                  <td className="border border-gray-200 p-3">R$ {produto.preco}</td>
+                  <td className="border border-gray-200 p-3">{produto.categoria}</td>
                   <td className="border border-gray-200 p-3 flex justify-center gap-2">
                     <button 
-                      onClick={() => navigate(`/editar-produto/${product.id}`)}
+                      onClick={() => navigate(`/editar-produto/${produto.id}`)}
                       data-testid="edit-product-button" 
                       className="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded text-sm transition-colors"
                     >
                       Editar
                     </button>
                     <button 
-                      onClick={() => onDelete(product.id)}
+                      onClick={() => onDelete(produto.id)}
                       data-testid="delete-product-button"
                       className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm transition-colors"
                     >
