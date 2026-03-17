@@ -1,0 +1,19 @@
+describe('RT1 - Fluxo de Criação de Produto', () => {
+  beforeEach(() => {
+    cy.visit('http://localhost:5173');
+  });
+
+  it('Deve criar um novo produto com sucesso', () => {
+    cy.get('[data-testid="criar-produto-button"]').click();
+    
+    cy.get('[data-testid="produto-nome-input"]').type('Teclado Mecânico Gamer');
+    cy.get('[data-testid="produto-preco-input"]').type('350.50');
+    cy.get('[data-testid="produto-categoria-input"]').type('Periféricos');
+    cy.get('[data-testid="salvar-produto-button"]').click();
+
+    cy.get('[data-testid="produto-row"]').should('have.length', 1);
+    cy.get('[data-testid="produto-row"]').first().should('contain', 'Teclado Mecânico Gamer');
+    cy.get('[data-testid="produto-row"]').first().should('contain', 'R$ 350.50');
+    cy.get('[data-testid="produto-row"]').first().should('contain', 'Periféricos');
+  });
+});
