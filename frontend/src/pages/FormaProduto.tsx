@@ -1,16 +1,13 @@
 import { useState, type FormEvent } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useOutletContext } from 'react-router-dom';
 import { type Produto } from '../types/index';
+import { type ContextoProduto } from '../components/Layout';
 
-interface FormaProdutoProps {
-  produto: Produto[]; // Recebe a lista de produtos
-  onSave: (produtoSalvo: Produto) => void;
-}
-
-export function FormaProduto({ produto, onSave }: FormaProdutoProps) {
+export function FormaProduto() {
   const navigate = useNavigate();
   const { id } = useParams();
-  const produtoEditado = id ? produto.find((p) => p.id === id) : null;
+  const { produtos, handleSalvarProduto } = useOutletContext<ContextoProduto>();
+  const produtoEditado = id ? produtos.find((p) => p.id === id) : null;
   const [nome, setNome] = useState(produtoEditado ? produtoEditado.nome : '');
   const [preco, setPreco] = useState(produtoEditado ? produtoEditado.preco.toString() : '');
   const [categoria, setCategoria] = useState(produtoEditado ? produtoEditado.categoria : '');
@@ -18,7 +15,6 @@ export function FormaProduto({ produto, onSave }: FormaProdutoProps) {
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     
-    // Objeto totalmente em português
     const dadosProduto: Produto = {
       id: id ? id : Date.now().toString(),
       nome,
@@ -26,7 +22,7 @@ export function FormaProduto({ produto, onSave }: FormaProdutoProps) {
       categoria,
     };
 
-    onSave(dadosProduto);
+    handleSalvarProduto(dadosProduto);
     navigate('/');
   };
 

@@ -1,13 +1,10 @@
-import { Link, useNavigate } from 'react-router-dom';
-import { type Produto } from '../types/index';
+import { Link, useNavigate, useOutletContext } from 'react-router-dom';
+import { type ContextoProduto } from '../components/Layout';
 
-interface ProdutoProps {
-  produto: Produto[];
-  onDelete: (id: string) => void;
-}
-
-export function Produtos({ produto, onDelete }: ProdutoProps) {
+export function Produtos() {
   const navigate = useNavigate();
+  // Puxando os dados através do Outlet!
+  const { produtos, handleDeletarProduto } = useOutletContext<ContextoProduto>();
 
   return (
     <div className="container mx-auto max-w-5xl bg-white p-6 rounded-lg shadow mt-8">
@@ -35,14 +32,14 @@ export function Produtos({ produto, onDelete }: ProdutoProps) {
             </tr>
           </thead>
           <tbody>
-            {produto.length === 0 ? (
+            {produtos.length === 0 ? (
               <tr>
                 <td colSpan={4} className="border border-gray-200 p-6 text-center text-gray-500">
                   Nenhum produto cadastrado.
                 </td>
               </tr>
             ) : (
-              produto.map((produto) => (
+              produtos.map((produto) => (
                 <tr key={produto.id} data-testid="produto-row" className="hover:bg-gray-50 transition-colors">
                   <td className="border border-gray-200 p-3">{produto.nome}</td>
                   <td className="border border-gray-200 p-3">R$ {produto.preco}</td>
@@ -50,14 +47,14 @@ export function Produtos({ produto, onDelete }: ProdutoProps) {
                   <td className="border border-gray-200 p-3 flex justify-center gap-2">
                     <button 
                       onClick={() => navigate(`/editar-produto/${produto.id}`)}
-                      data-testid="edit-product-button" 
+                      data-testid="editar-produto-button" 
                       className="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded text-sm transition-colors"
                     >
                       Editar
                     </button>
                     <button 
-                      onClick={() => onDelete(produto.id)}
-                      data-testid="delete-product-button"
+                      onClick={() => handleDeletarProduto(produto.id)}
+                      data-testid="deletar-produto-button"
                       className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm transition-colors"
                     >
                       Excluir
