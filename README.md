@@ -18,6 +18,7 @@ Este é um projeto full-stack desenvolvido para a disciplina TPA1. A aplicação
 - **Express** — Roteamento e servidor web
 - **TypeScript** com `ts-node-dev` para desenvolvimento
 - **CORS**
+- **Swagger** (`swagger-ui-express` e `swagger-jsdoc`) — Documentação interativa da API
 
 ---
 
@@ -69,6 +70,16 @@ npm run dev
 ```
 
 O Vite iniciará o servidor de desenvolvimento. A URL de acesso será exibida no terminal (geralmente [http://localhost:5173](http://localhost:5173)).
+
+---
+
+## 📖 Documentação da API (Swagger)
+
+O projeto conta com o **Swagger** para a documentação e teste interativo de todas as rotas HTTP.
+
+Com o back-end em execução, você pode acessar a interface visual do Swagger diretamente pelo seu navegador:
+
+👉 **http://localhost:3333/api-docs**
 
 ---
 
