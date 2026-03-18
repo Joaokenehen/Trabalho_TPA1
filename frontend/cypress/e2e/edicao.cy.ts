@@ -10,7 +10,7 @@ describe('RT2 - Fluxo de Edição de Produto', () => {
     cy.get('[data-testid="produto-categoria-input"]').type('Acessórios');
     cy.get('[data-testid="salvar-produto-button"]').click();
 
-    cy.get('[data-testid="editar-produto-button"]').click();
+    cy.get('[data-testid="editar-produto-button"]').last().click();
 
     cy.get('[data-testid="produto-nome-input"]').clear().type('Mouse Óptico Sem Fio');
     cy.get('[data-testid="produto-preco-input"]').clear().type('120.00');

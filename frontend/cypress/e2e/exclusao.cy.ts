@@ -12,7 +12,7 @@ describe('RT3 - Fluxo de Exclusão de Produto', () => {
 
     cy.get('[data-testid="produto-row"]').should('have.length', 1);
 
-    cy.get('[data-testid="excluir-produto-button"]').click();
+    cy.get('[data-testid="excluir-produto-button"]').last().click();
 
     cy.get('[data-testid="produto-row"]').should('not.exist');
     cy.contains('Nenhum produto cadastrado.').should('be.visible');
